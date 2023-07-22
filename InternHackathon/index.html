@@ -8,18 +8,28 @@
     <script type="module" src="https://js.arcgis.com/calcite-components/1.4.3/calcite.esm.js"></script>
     <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.4.3/calcite.css" />
     <script src="https://js.arcgis.com/4.27/"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 </head>
 
 <body>
-    <div id="sideBar" class="esri-widget">
-        <h2>San Diego Walk Guide</h2>
-        <p id="info">Click somewhere in the map to query POIs within 5-min walking distance.</p>
-        <calcite-list id="queryResults"></calcite-list>
-    </div>
-    <div id="viewDiv"></div>
+  <section class="modal">
+    <h2>IMPACTAPEDIA</h2>
+    <button class="btn">Play</button>
+  </section>
+  <div class="overlay"></div>
+  <div class="topcorner">
+    Score: 100
+  </div>
+  <div id="sideBar">
+    <h2>IMPACTAPEDIA</h2>
+    <p id="info">Click anywhere on the map to play!</p>
+    <div id="queryResults"></div>
+    <calcite-list id="queryResults"></calcite-list>
+</div>
+<div id="viewDiv"></div>
 </body>
 
 </html>

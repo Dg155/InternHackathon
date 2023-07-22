@@ -1,3 +1,17 @@
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const openModalBtn = document.querySelector(".btn-open");
+const closeModalBtn = document.querySelector(".btn");
+
+const closeModal = function () {
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+};
+
+closeModalBtn.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
+
+
 require([
   "esri/WebMap",
   "esri/views/MapView",
@@ -15,10 +29,12 @@ require([
 ) {
   let placesLayer;
 
+const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab3107587dc0715", "1ce734a5ad484fd49a3ab38aff321d95", "f92e47aefcbf487e85c2e2a809d9a7ca"];
+
   // step 1: setup the map
   const webmap = new WebMap({
       portalItem: {
-          id: "aff566df19af462b9324a05fd98a1a27"
+          id: portalIDs[Math.floor(Math.random() * portalIDs.length)]
       },
       popupEnabled: true
   });
@@ -32,12 +48,12 @@ require([
   });
   mapview.ui.add(legend, "bottom-left");
 
-  webmap.when(() => {
-      placesLayer = webmap.layers.find(layer => {
-          return layer.title === "San Diego Places";
-      });
-      placesLayer.outFields = ["NAME", "ADDR", "TYPE", "CITYNM"];
-  })
+  // webmap.when(() => {
+  //     placesLayer = webmap.layers.find(layer => {
+  //         return layer.title === "San Diego Places";
+  //     });
+  //     placesLayer.outFields = ["NAME", "ADDR", "TYPE", "CITYNM"];
+  // })
 
   // step 2: service area
 
@@ -56,7 +72,7 @@ require([
           }
       });
       mapview.graphics.add(locationGraphic, 0);
-      findServiceArea(locationGraphic, [5], serviceAreaUrl);
+      findServiceArea(locationGraphic, [100], serviceAreaUrl);
   });
 
   // when clicking on the side bar, reset
@@ -134,7 +150,7 @@ require([
   function reset() {
       mapview.graphics.removeAll();
       bufferLayer.removeAll();
-      placesLayer.featureEffect = null;
+      // placesLayer.featureEffect = null;
       document.getElementById("queryResults").innerHTML = "";
   }
 });
