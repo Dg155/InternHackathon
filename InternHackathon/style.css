@@ -166,6 +166,8 @@ h2 {
 
 .score {
   color: white;
+  animation: fadeBounce 1s forwards;
+  -webkit-animation: fadeBounce 1s forwards;
 }
 
 .modal {
