@@ -1,3 +1,111 @@
+/* Css Animations */
+@-webkit-keyframes fadeBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(200%);
+  }
+
+  40% {
+    transform: translateY(0);
+  }
+
+  55% {
+    transform: translateY(6px);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  85% {
+    transform: translateY(3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(200%);
+  }
+
+  40% {
+    transform: translateY(0);
+  }
+
+  55% {
+    transform: translateY(6px);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  85% {
+    transform: translateY(3px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  10% {
+    opacity: 10%;
+    transform: scale(0.1);
+  }
+
+  100% {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+      transform: scale(0);
+  }
+
+  10% {
+      opacity: 10%;
+      transform: scale(0.1);
+  }
+
+  100% {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+@keyframes shimmer {
+   from {
+      transform: translateX(-230%);
+   }
+   to {
+      transform: translateX(230%);
+   }
+}
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
 html,
 body {
     height: 100%;
@@ -20,8 +128,9 @@ body {
   flex-direction: column;
   align-items: center;
   flex: 1;
-  width: 30%;
+  width: 100%;
   min-width: 240px;
+  background-image: linear-gradient(to right bottom, #000000, #1c1c1c, #323232, #4E4E4E,#323232, #1c1c1c, #000000);
 }
 
 #viewDiv {
@@ -43,6 +152,8 @@ h2 {
   margin: 0;
   font-size: 20px;
   margin-bottom: 5px;
+  font-family: "Sofia", sans-serif;
+  color: white;
 }
 
 .topcorner{
@@ -52,6 +163,10 @@ h2 {
   margin: 20px;
   font-size: 30px;
  }
+
+.score {
+  color: white;
+}
 
 .modal {
   display: flex;
@@ -64,9 +179,10 @@ h2 {
   min-height: 250px;
   position: absolute;
   top: 20%;
-  background-image: linear-gradient(to left bottom, #242424, #343434, #454545, #575757, #696969, #696969, #696969, #696969, #575757, #454545, #343434, #242424);  border: 6px cyan solid;
   border-radius: 15px;
   z-index: 2;
+  animation: fadeIn 1s forwards;
+  -webkit-animation: fadeIn 1s forwards;
 }
 
 .modal .flex {
@@ -85,18 +201,14 @@ button {
   display: inline-block;
   padding: 0.8rem 1.4rem;
   font-weight: 700;
-  background-color: black;
+  background-image: linear-gradient(to right bottom, #000000, #1c1c1c, #323232, #4E4E4E,#323232, #1c1c1c, #000000);
   color: white;
   border-radius: 5px;
   text-align: center;
   font-size: 30px;
   width: fit-content;
   align-self: center;
-}
-
-.btn-open {
-  position: absolute;
-  bottom: 150px;
+  transform: translateY(100px);
 }
 
 .overlay {
@@ -108,6 +220,7 @@ button {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  background-image: linear-gradient(to left bottom, rgba(36, 36, 36, 0.7), rgba(52, 52, 52, 0.7), rgba(69, 69, 69, 0.7), rgba(87, 87, 87, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(87, 87, 87, 0.7), rgba(69, 69, 69, 0.7), rgba(52, 52, 52, 0.7), rgba(36, 36, 36, 0.7));
   backdrop-filter: blur(3px);
   z-index: 1;
 }
