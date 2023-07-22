@@ -1,0 +1,25 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no" />
+    <title>San Diego Walk Guide | Introduction to JavaScript for Future Web Developers</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/light/main.css" />
+    <script type="module" src="https://js.arcgis.com/calcite-components/1.4.3/calcite.esm.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.4.3/calcite.css" />
+    <script src="https://js.arcgis.com/4.27/"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <div id="sideBar" class="esri-widget">
+        <h2>San Diego Walk Guide</h2>
+        <p id="info">Click somewhere in the map to query POIs within 5-min walking distance.</p>
+        <calcite-list id="queryResults"></calcite-list>
+    </div>
+    <div id="viewDiv"></div>
+</body>
+
+</html>

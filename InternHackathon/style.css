@@ -1,0 +1,21 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#sideBar {
+    height: 100%;
+    width: 30%;
+    float: right;
+    padding: 20px;
+    overflow: auto;
+    min-width: 240px;
+}
+
+#viewDiv {
+    height: 100%;
+    max-width: 70%;
+}
