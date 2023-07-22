@@ -106,6 +106,42 @@
   }
 }
 
+@-webkit-keyframes scaleIn {
+  from {
+      -webkit-transform: scale(1.7);
+  }
+  to {
+      -webkit-transform: scale(1);
+      transform: translateY(-187%);
+  }
+}
+@keyframes scaleIn {
+  from {
+      transform: scale(1.7);
+  }
+  to {
+      transform: scale(1);
+      transform: translateY(-187%);
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+      opacity: 1;
+  }
+  to {
+      opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  from {
+      opacity: 1;
+  }
+  to {
+      opacity: 0;
+  }
+}
+
 html,
 body {
     height: 100%;
@@ -123,14 +159,31 @@ body {
   min-height: 100vh;
 }
 
-#sideBar {
+#Banner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
-  width: 100%;
-  min-width: 240px;
-  background-image: linear-gradient(to right bottom, #000000, #1c1c1c, #323232, #4E4E4E,#323232, #1c1c1c, #000000);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background-image: linear-gradient(to right top, #1d2224, #282b2d, #333537, #3e3f40, #49494a, #49494a, #49494a, #49494a, #3e3f40, #333537, #282b2d, #1d2224);  padding: 10px;
+  border: #02b7d6 4px solid;
+  border-radius: 10px;
+  border-top: none;
+  width: fit-content;
+  text-align: center;
+}
+
+.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  text-align:center;
+  scale: 1.5;
 }
 
 #viewDiv {
@@ -142,17 +195,32 @@ body {
 
 h2 {
   margin: 0;
-  margin-top: 10;
   font-family: "Sofia", sans-serif;
   font-size: 70px;
-  text-shadow: 3px 3px 3px #ababab;
+  text-shadow: 2px 2px 2px #02b7d6;
+}
+
+#title {
+  transform: scale(1.7);
+}
+
+.fadeOutLogo {
+  -webkit-animation: scaleIn 0.7s ease-in forwards;
+  animation: scaleIn 0.7s ease-in forwards;
+  animation-fill-mode: forwards;
+}
+
+.fadeOut {
+  -webkit-animation: fadeOut 0.7s ease-in forwards;
+  animation: fadeOut 0.7s ease-in forwards;
+  animation-fill-mode: forwards;
 }
 
 #info {
   margin: 0;
   font-size: 20px;
-  margin-bottom: 5px;
-  font-family: "Sofia", sans-serif;
+  margin-bottom: 15px;
+  font-family: 'Noto Sans', sans-serif;
   color: white;
 }
 
@@ -182,7 +250,7 @@ h2 {
   position: absolute;
   top: 20%;
   border-radius: 15px;
-  z-index: 2;
+  z-index: 5;
   animation: fadeIn 1s forwards;
   -webkit-animation: fadeIn 1s forwards;
 }
@@ -210,7 +278,8 @@ button {
   font-size: 30px;
   width: fit-content;
   align-self: center;
-  transform: translateY(100px);
+  transform: translateY(100px); 
+  font-family: 'Noto Sans', sans-serif;
 }
 
 .overlay {
@@ -224,16 +293,159 @@ button {
   background: rgba(0, 0, 0, 0.5);
   background-image: linear-gradient(to left bottom, rgba(36, 36, 36, 0.7), rgba(52, 52, 52, 0.7), rgba(69, 69, 69, 0.7), rgba(87, 87, 87, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(87, 87, 87, 0.7), rgba(69, 69, 69, 0.7), rgba(52, 52, 52, 0.7), rgba(36, 36, 36, 0.7));
   backdrop-filter: blur(3px);
-  z-index: 1;
+  z-index: 3;
 }
 
 .modal h2{
   margin-bottom: 50;
-  /* color: white;
-  text-shadow: 3px 3px 3px black; */
 }
-
 
 .hidden {
   display: none;
 }
+
+/* Tron Grid */
+
+.grid-container, .grid-container-top { 
+	position: absolute; width: 200%; height: 100vh; bottom: 0; left: -50%; overflow: hidden; 
+	transform: perspective(200px) rotateX(40deg) scale(1) translateZ(0);
+	transform-origin: bottom;
+	padding: 1px; 
+	-webkit-background-clip: content-box; 
+	-webkit-backface-visibility: hidden;
+	outline: 1px solid transparent; 
+	will-change: transform;
+}
+
+.grid-line { height: 100%; width: 100%; position: absolute; }
+
+
+.grid-line:before,
+.grid-line:after  { content: ""; display: block; position: absolute; }
+.grid-line:before { height: 5px; width: 100%; background: teal; }
+.grid-line:after  { height: 100%; width: 5px; background-image: linear-gradient(transparent, teal); }
+
+.grid-line:nth-child(1):before  { top: 0%;  opacity: 0; }
+.grid-line:nth-child(2):before  { top: 10%; opacity: 0; }
+.grid-line:nth-child(3):before  { top: 20%; opacity: .3; }
+.grid-line:nth-child(4):before  { top: 30%; opacity: .4; }
+.grid-line:nth-child(5):before  { top: 40%; opacity: .5; }
+.grid-line:nth-child(6):before  { top: 50%; opacity: .6; }
+.grid-line:nth-child(7):before  { top: 60%; opacity: .7; }
+.grid-line:nth-child(8):before  { top: 70%; opacity: .8; }
+.grid-line:nth-child(9):before  { top: 80%; opacity: .9; }
+.grid-line:nth-child(10):before { top: 90%; opacity: 1; }
+.grid-line:nth-child(11):before { top: calc(100% - 3px); }
+
+
+.grid-line:nth-child(1):after  { left: 0%;  }
+.grid-line:nth-child(2):after  { left: 10%; }
+.grid-line:nth-child(3):after  { left: 20%; }
+.grid-line:nth-child(4):after  { left: 30%; }
+.grid-line:nth-child(5):after  { left: 40%; }
+.grid-line:nth-child(6):after  { left: 50%; }
+.grid-line:nth-child(7):after  { left: 60%; }
+.grid-line:nth-child(8):after  { left: 70%; }
+.grid-line:nth-child(9):after  { left: 80%; }
+.grid-line:nth-child(10):after { left: 90%; }
+.grid-line:nth-child(11):after { left: calc(100% - 3px); }
+
+/* Tron Grid End */
+
+/* Tron Button */
+
+.tron-button {
+  background: #1a1a1a;
+  color: #02b7d6;
+  display: inline-block;
+  overflow: hidden;
+  padding: 15px 25px;
+  position: relative;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.tron-button__left-line {
+  animation: up 1s infinite;
+  background: linear-gradient(to top, rgba(0, 109, 128, 0.3), #02b7d6);  
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+}
+
+@keyframes up {
+  from {
+      transform: translateY(100%)
+  }
+  to {
+      transform: translateY(-100%)
+  }
+}
+
+.tron-button__top-line {
+  animation: right 1s 0.5s infinite;
+  background: linear-gradient(to right, rgba(0, 109, 128, 0.3), #02b7d6);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 4px;
+}
+
+@keyframes right {
+  from {
+      transform: translateX(-100%)
+  }
+  to {
+      transform: translateX(100%)
+  }
+}
+
+.tron-button__right-line {
+  animation: bottom 1s infinite;
+  background: linear-gradient(to bottom, rgba(0, 109, 128, 0.3), #02b7d6);  
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+}
+
+@keyframes bottom {
+  from {
+      transform: translateY(-100%)
+  }
+  to {
+      transform: translateY(100%)
+  }
+}
+
+.tron-button__bottom-line {
+  animation: left 1s 0.5s infinite;
+  background: linear-gradient(to left, rgba(0, 109, 128, 0.3), #02b7d6);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+}
+
+@keyframes left {
+  from {
+      transform: translateX(100%)
+  }
+  to {
+      transform: translateX(-100%)
+  }
+}
+
+.tron-button:hover{
+  box-shadow: 0px 0px 100px 5px #2E4774;
+  background-color: #02b7d6;
+  color: #1a1a1a;
+  transition: all 300ms ease-in;
+}
+
+/* Tron Button End */

@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.4.3/calcite.css" />
     <script src="https://js.arcgis.com/4.27/"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=Sen&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
     <script src="main.js" defer></script>
@@ -16,19 +19,42 @@
 
 <body>
   <section class="modal">
-    <h2>IMPACTAPEDIA</h2>
-    <button class="btn">Play</button>
+    <h2 id="title">IMPACTAPEDIA</h2>
+    <button class="btn tron-button">
+      <span class="tron-button__left-line"></span>
+      <span class="tron-button__top-line"></span>
+      <span class="tron-button__right-line"></span>
+      <span class="tron-button__bottom-line"></span> 
+      Play
+    </button>
   </section>
-  <div class="overlay"></div>
+  <div class="overlay">
+    <section class="grid-container">
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div> 
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+    </section>
+  </div>
   <div class="topcorner score">
     Score: 100
   </div>
-  <div id="sideBar">
+  <div id="Banner">
     <h2>IMPACTAPEDIA</h2>
     <p id="info">Click anywhere on the map to play!</p>
     <div id="queryResults"></div>
     <calcite-list id="queryResults"></calcite-list>
-</div>
+  </div>
+  <div class="top hidden">
+    <img src="images/ImpactapediaBanner.png" alt="bannerBackground">
+  </div>
 <div id="viewDiv"></div>
 </body>
 

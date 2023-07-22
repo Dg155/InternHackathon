@@ -4,9 +4,22 @@ const openModalBtn = document.querySelector(".btn-open");
 const closeModalBtn = document.querySelector(".btn");
 
 const closeModal = function () {
+  setTimeout(hideOverlayAnimation, 700); 
+  document.getElementById('title').className = 'fadeOutLogo';
+};
+
+function hideOverlayAnimation() {
+  modal.classList.add("fadeOut");
+  overlay.classList.add("fadeOut");
+  setTimeout(hideOverlay, 700); 
+}
+
+function hideOverlay() {
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
-};
+}
+
+
 
 closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
