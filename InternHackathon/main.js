@@ -86,23 +86,23 @@ const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab31075
   });
   webmap.layers.add(bufferLayer);
 
-  async function findServiceArea(location, cutoff, url) {
-      // get the walking distance
-      const networkDescription = await networkService.fetchServiceDescription(url);
-      const walkTravelMode = networkDescription.supportedTravelModes.find(
-          (travelMode) => travelMode.name === "Walking Time"
-      );
+  async function findServiceArea(location, radiusInMi, url) {
+    const radiusInMeters = radiusInMi * 1600; //Miles to meters
 
-      // set all of the input parameters for the service
-      const taskParameters = new ServiceAreaParams({
-          facilities: new FeatureSet({
-              features: [location]
-          }),
-          defaultBreaks: cutoff,
-          trimOuterPolygon: true,
-          outSpatialReference: mapview.spatialReference,
-          travelMode: walkTravelMode
-      });
+    const networkDescription = await networkService.fetchServiceDescription(url);
+    const drivingTravelMode = networkDescription.supportedTravelModes.find(
+        (travelMode) => travelMode.name === "Driving Distance"
+    );
+
+    const taskParameters = new ServiceAreaParams({
+        facilities: new FeatureSet({
+            features: [location]
+        }),
+        defaultBreaks: [radiusInMeters],
+        trimOuterPolygon: true,
+        outSpatialReference: mapview.spatialReference,
+        travelMode: drivingTravelMode
+    });
 
       const { serviceAreaPolygons } = await serviceArea.solve(url, taskParameters);
       serviceAreaPolygons.features.map((serviceAreaFeature) => {
