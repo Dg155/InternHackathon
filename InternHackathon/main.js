@@ -154,3 +154,22 @@ const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab31075
       document.getElementById("queryResults").innerHTML = "";
   }
 });
+
+function toggleTab() {
+    const tabContent = document.querySelector('.tab-content');
+    const popupTab = document.querySelector('.popup-tab');
+    const tabIcon = document.querySelector('.tab-icon');
+
+    // Toggle the visibility of the tab content
+    if (tabContent.style.display === 'none') { // click --> open popup tab
+        tabContent.style.display = 'block';
+        popupTab.style.left = '0';
+        tabIcon.style.left = '370';
+        tabIcon.style.top = '30';
+        
+    } else { // click --> hide tab
+        tabContent.style.display = 'none';
+        popupTab.style.left = '-25%';
+        tabIcon.style.left = '10';
+    }
+}

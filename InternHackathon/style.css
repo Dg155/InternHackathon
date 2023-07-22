@@ -156,6 +156,46 @@ h2 {
   color: white;
 }
 
+.popup-tab {
+  position: absolute;
+  left: -25%;
+  top: 0;
+  height: 100%;
+  width: 25%;
+  background-color: #a7a6a6;
+  transition: left 0.3s;
+  overflow: hidden;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+  position: relative;
+}
+
+.tab-icon {
+  display: block;
+  position: absolute;
+  left: 10px;
+  top: 30px;
+  transform: translateY(-50%);
+  font-size: 24px;
+  cursor: pointer;
+  transition: left 0.3s;
+  color: #ffffff;
+}
+
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 1px 7px;
+  background-color: #68696f;
+  /* border-radius: 50%; */
+}
+
 .topcorner{
   position:absolute;
   top:0;
