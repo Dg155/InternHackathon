@@ -136,7 +136,7 @@ require([
   "Xylem, a leading water technology company, partners with Esri, the global leader in GIS and location intelligence, to provide innovative solutions to water utilities worldwide. Their collaborative efforts have resulted in AI-powered pipeline analysis technology that significantly reduces costs and pipeline failures, leading to dramatic operational improvements and optimized water networks for utilities.",
   "Ericsson, a global leader in communications technology and services, leverages Esri's GIS solutions to enhance their services and infrastructure in mobility, broadband, and the cloud. With a wide range of GIS services provided, Ericsson empowers the telecom industry and other sectors to achieve better business outcomes, increased efficiency, and improved user experiences, contributing to a more sustainable future. has context menu"]
 
-  displayInfo(0, 0);
+  popUpContent.innerHTML = "";
   
   // step 1: setup the map
   const webmap = new WebMap({
