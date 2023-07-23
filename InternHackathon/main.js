@@ -223,7 +223,7 @@ function toggleTab() {
         tabContent.style.display = 'block';
         popupTab.style.left = '0';
         tabIcon.style.left = '370';
-        tabIcon.style.top = '30';
+        tabIcon.style.top = '110';
         
     } else { // click --> hide tab
         tabContent.style.display = 'none';
