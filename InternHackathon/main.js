@@ -2,6 +2,7 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const openModalBtn = document.querySelector(".btn-open");
 const closeModalBtn = document.querySelector(".btn");
+const scoreDisplay = document.querySelector(".score");
 
 const closeModal = function () {
   setTimeout(hideOverlayAnimation, 700); 
@@ -24,12 +25,10 @@ function hideOverlay() {
 closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
-
 require([
   "esri/WebMap",
   "esri/views/MapView",
   "esri/widgets/Legend",
-  // step 2: service area
   "esri/config",
   "esri/rest/networkService",
   "esri/rest/serviceArea",
@@ -37,12 +36,17 @@ require([
   "esri/rest/support/FeatureSet",
   "esri/Graphic",
   "esri/layers/GraphicsLayer",
+  "esri/rest/geometryService",
 ], function (
-  WebMap, MapView, Legend, esriConfig, networkService, serviceArea, ServiceAreaParams, FeatureSet, Graphic, GraphicsLayer
+  WebMap, MapView, Legend, esriConfig, networkService, serviceArea, ServiceAreaParams, FeatureSet, Graphic, GraphicsLayer, geometryService
 ) {
   let placesLayer;
+  let score = 0;
+  let objectIDs = [];
 
-const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab3107587dc0715", "1ce734a5ad484fd49a3ab38aff321d95", "f92e47aefcbf487e85c2e2a809d9a7ca"];
+  scoreDisplay.innerHTML = score;
+
+  const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab3107587dc0715", "1ce734a5ad484fd49a3ab38aff321d95", "f92e47aefcbf487e85c2e2a809d9a7ca"];
 
   // step 1: setup the map
   const webmap = new WebMap({
@@ -59,14 +63,47 @@ const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab31075
   let legend = new Legend({
       view: mapview
   });
-  mapview.ui.add(legend, "bottom-left");
 
-  // webmap.when(() => {
-  //     placesLayer = webmap.layers.find(layer => {
-  //         return layer.title === "San Diego Places";
-  //     });
-  //     placesLayer.outFields = ["NAME", "ADDR", "TYPE", "CITYNM"];
-  // })
+  webmap.when(() => {
+      placesLayer = webmap.layers.find(layer => {
+          return layer.title === "Impactapedia";
+      });
+      const featureFilter = {
+        geometry: mapview.extent,
+        spatialRelationship: "intersects",
+    };
+      placesLayer.featureEffect = {
+          filter: featureFilter,
+          includedEffect: "opacity(0%)",
+          excludedEffect: "grayscale(90%) opacity(80%)"
+      }; 
+    });
+
+
+
+      // mapview.whenLayerView(placesLayer).then(layerView => {
+      //   layerView.watch("updating", (val) => {
+      //       if (!val) {
+      //         let query = placesLayer.createQuery();
+      //         query.geometry = { //Create a point
+      //             type: "point",
+      //             longitude: -118.80657463861,
+      //             latitude: 34.0005930608889
+      //         };
+      //         query.distance = 2;
+      //         query.units - "miles";
+      //         query.spatialRelationship = "contains";
+      //         query.outFields = ["*"];
+      //         query.returnGeometry = true;
+      //           layerView.queryFeatures(query).then((results) => {
+      //               console.log(JSON.stringify(results));
+      //             })
+      //           }
+      //         })
+      //       });
+
+
+  
 
   // step 2: service area
 
@@ -85,7 +122,7 @@ const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab31075
           }
       });
       mapview.graphics.add(locationGraphic, 0);
-      findServiceArea(locationGraphic, [100], serviceAreaUrl);
+      findServiceArea(locationGraphic, [500], serviceAreaUrl);
   });
 
   // when clicking on the side bar, reset
@@ -129,31 +166,41 @@ const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab31075
           };
           // add the polygon graphics below the point graphic
           bufferLayer.graphics.add(serviceAreaFeature)
+          serviceAreaFeature.visible = false;
 
-          // add the feature effect
+          //add the feature effect
+          geometryService.union("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/Geometry/GeometryServer", bufferLayer.graphics.items.map((graphic) => graphic.geometry)).then((allGeometry) => {
           const featureFilter = {
-              geometry: serviceAreaFeature.geometry,
+              geometry: allGeometry,
               spatialRelationship: "intersects",
           };
+          serviceAreaFeature.visible = true;
           placesLayer.featureEffect = {
               filter: featureFilter,
-              includedEffect: "bloom(2, 1px, 0)",
-              excludedEffect: "grayscale(90%) opacity(80%)"
+              includedEffect: "opacity(100%)",
+              excludedEffect: "opacity(0%)"
           };
+          });
+
 
           const query = {
               geometry: serviceAreaFeature.geometry
           };
           mapview.whenLayerView(placesLayer).then(placesLayerView => {
               placesLayerView.queryFeatures(query).then((response) => {
-                  console.log(response.features);
-                  const attributes = response.features.map(f => f.attributes);
-                  attributes.forEach((place) => {
-                      const infoDiv = document.createElement("calcite-list-item");
-                      infoDiv.label = place.NAME;
-                      infoDiv.description = place.ADDR + ", " + place.CITYNM + " - " + place.TYPE;
-                      document.getElementById("queryResults").appendChild(infoDiv);
+                  //console.log(response.features);
+                  response.features.forEach((place) => {
+                    score += 100;
+                    scoreDisplay.innerHTML = score;
+                    objectIDs.push(place.attributes.OBJECTID);
                   });
+                  // const attributes = response.features.map(f => f.attributes);
+                  // attributes.forEach((place) => {
+                  //     const infoDiv = document.createElement("calcite-list-item");
+                  //     infoDiv.label = place.NAME;
+                  //     infoDiv.description = place.ADDR + ", " + place.CITYNM + " - " + place.TYPE;
+                  //     document.getElementById("queryResults").appendChild(infoDiv);
+                  // });
               })
           })
       })
@@ -162,8 +209,6 @@ const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab31075
   // clear map and sidebar
   function reset() {
       mapview.graphics.removeAll();
-      bufferLayer.removeAll();
-      // placesLayer.featureEffect = null;
       document.getElementById("queryResults").innerHTML = "";
   }
 });

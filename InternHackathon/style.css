@@ -276,6 +276,7 @@ h2 {
   color: white;
   animation: fadeBounce 1s forwards;
   -webkit-animation: fadeBounce 1s forwards;
+  z-index: 2;
 }
 
 .modal {
