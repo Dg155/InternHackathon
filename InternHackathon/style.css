@@ -298,7 +298,11 @@ h2 {
   font-size: 30px;
  }
 
-.esri-widget__table, .esri-popup__content, .esri-popup__collapse-icon, .esri-ui-top-left {
+/* .esri-widget__table, .esri-popup__content {
+  display: none;
+} */
+
+.esri-popup__collapse-icon, .esri-ui-top-left {
   display: none;
 }
 
