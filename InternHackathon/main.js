@@ -7,6 +7,7 @@ const startExploreBtn = document.getElementById("startExploreButton");
 const scoreDisplays = document.querySelectorAll(".score");
 const companyFoundDisplay = document.querySelector(".companiesFound");
 const companyName = document.querySelectorAll('.esri-widget__heading');
+const popUpContent = document.getElementById('popUpContent');
 
 const tabContent = document.querySelector('.tab-content');
 const popupTab = document.querySelector('.popup-tab');
@@ -67,6 +68,7 @@ const updateGameType = function () {
     scoreTwo.classList.remove("hidden");
     CompaniesFoundText.classList.remove("hidden");
     totalCompanies.classList.remove("hidden");
+    popUpContent.classList.add("extraMargin");
     const featureFilter = {
       geometry: mapview.extent,
       spatialRelationship: "intersects",
@@ -86,6 +88,7 @@ const updateGameType = function () {
     scoreTwo.classList.add("hidden");
     CompaniesFoundText.classList.add("hidden");
     totalCompanies.classList.add("hidden");
+    popUpContent.classList.remove("extraMargin");
     const featureFilter = {
       geometry: mapview.extent,
       spatialRelationship: "intersects",
@@ -129,8 +132,12 @@ require([
 
   const EsriImpacts = ["Blue Raster, as a Gold Partner of Esri, has played a crucial role in transforming PG&E's operations through various ArcGIS solutions. From ArcGIS Online Accelerate and ArcGIS Hub Accelerate to ArcGIS Indoors Accelerate and ArcGIS StoryMaps Solutions, they have empowered PG&E to enhance data sharing, engagement, and spatial visualization, ultimately leading to improved efficiency and safety in managing their critical infrastructure.",
   "Using ArcGIS, Lockheed Martin's Global Emergency Operations Center (GEOC) proactively monitors and mitigates global threats, ensuring the safety and security of their 120,000 employees across 350 facilities in over 40 countries. With real-time data and GIS analytics, they can prioritize immediate action, conduct wellness checks, and reduce potential risks to their most valuable asset – their employees.",
-  "Schneider Electric, a world leader in utility solutions, harnesses Esri's ArcGIS® software to provide powerful ArcFM™ Solution tools for managing and editing facility data. With an industry-proven 3D project delivery methodology and a team of experienced GIS experts, Schneider Electric delivers a wide range of services to utilities globally, ensuring increased productivity, reduced costs, and improved services."]
+  "Schneider Electric, a world leader in utility solutions, harnesses Esri's ArcGIS® software to provide powerful ArcFM™ Solution tools for managing and editing facility data. With an industry-proven 3D project delivery methodology and a team of experienced GIS experts, Schneider Electric delivers a wide range of services to utilities globally, ensuring increased productivity, reduced costs, and improved services.",
+  "Xylem, a leading water technology company, partners with Esri, the global leader in GIS and location intelligence, to provide innovative solutions to water utilities worldwide. Their collaborative efforts have resulted in AI-powered pipeline analysis technology that significantly reduces costs and pipeline failures, leading to dramatic operational improvements and optimized water networks for utilities.",
+  "Ericsson, a global leader in communications technology and services, leverages Esri's GIS solutions to enhance their services and infrastructure in mobility, broadband, and the cloud. With a wide range of GIS services provided, Ericsson empowers the telecom industry and other sectors to achieve better business outcomes, increased efficiency, and improved user experiences, contributing to a more sustainable future. has context menu"]
 
+  displayInfo(0, 0);
+  
   // step 1: setup the map
   const webmap = new WebMap({
       portalItem: {
@@ -167,9 +174,27 @@ require([
   esriConfig.apiKey = "AAPK2d7fbc74c0234e7d87853f9a7536a266jjADxHV7SDwJC-LQWIVQm_AD68b8QGuoVqWLgcrzANkVM0FOidizY4nERgOVi5fr";
   const serviceAreaUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/ServiceAreas/NAServer/ServiceArea_World";
 
+  function displayInfo(x, y) {
+    if (x == 38 && y == -77) {
+    popUpContent.innerHTML = EsriImpacts[0];
+  }
+  else if (x == 39 && y == -105) {
+    popUpContent.innerHTML = EsriImpacts[1];
+  }
+  else if (x == 40 && y == -105) {
+    popUpContent.innerHTML = EsriImpacts[2];
+  }
+  else if (x == 41 && y == -73) {
+    popUpContent.innerHTML = EsriImpacts[3];
+  }
+  else {
+    popUpContent.innerHTML = EsriImpacts[4];
+  }
+}
+
   // when clicking anywhere on the map, generate the service area
-  mapview.on("click", (event) => {
-    console.log(event);
+  mapview.on("click", (event) => {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+    displayInfo(Math.trunc(event.mapPoint.latitude), Math.trunc(event.mapPoint.longitude));
     if (!gameMode) {return;}
     reset();
     const locationGraphic = new Graphic({

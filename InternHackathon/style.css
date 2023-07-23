@@ -250,6 +250,10 @@ h2 {
   font-size: 25px;
 }
 
+.extraMargin {
+  margin: 20px;
+}
+
 .scoreList {
   display: flex;
   flex-direction: row;
