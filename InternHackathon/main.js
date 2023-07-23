@@ -127,6 +127,10 @@ require([
 
   const portalIDs = ["65cb6f8751ba4c86be7c79f66d991339", "ff715f8f7a304d478db3170c96c041b6", "e8edc5231cec4a0b82bf3ba4ca9fc5c2", "8a58f1ed3d3f4b259f7817d4694a1133"];
 
+  const EsriImpacts = ["Blue Raster, as a Gold Partner of Esri, has played a crucial role in transforming PG&E's operations through various ArcGIS solutions. From ArcGIS Online Accelerate and ArcGIS Hub Accelerate to ArcGIS Indoors Accelerate and ArcGIS StoryMaps Solutions, they have empowered PG&E to enhance data sharing, engagement, and spatial visualization, ultimately leading to improved efficiency and safety in managing their critical infrastructure.",
+  "Using ArcGIS, Lockheed Martin's Global Emergency Operations Center (GEOC) proactively monitors and mitigates global threats, ensuring the safety and security of their 120,000 employees across 350 facilities in over 40 countries. With real-time data and GIS analytics, they can prioritize immediate action, conduct wellness checks, and reduce potential risks to their most valuable asset – their employees.",
+  "Schneider Electric, a world leader in utility solutions, harnesses Esri's ArcGIS® software to provide powerful ArcFM™ Solution tools for managing and editing facility data. With an industry-proven 3D project delivery methodology and a team of experienced GIS experts, Schneider Electric delivers a wide range of services to utilities globally, ensuring increased productivity, reduced costs, and improved services."]
+
   // step 1: setup the map
   const webmap = new WebMap({
       portalItem: {
@@ -165,6 +169,7 @@ require([
 
   // when clicking anywhere on the map, generate the service area
   mapview.on("click", (event) => {
+    console.log(event);
     if (!gameMode) {return;}
     reset();
     const locationGraphic = new Graphic({
@@ -176,7 +181,7 @@ require([
         }
     });
     mapview.graphics.add(locationGraphic, 0);
-    findServiceArea(locationGraphic, [500], serviceAreaUrl);
+    findServiceArea(locationGraphic, [30], serviceAreaUrl);
   });
 
   // when clicking on the side bar, reset
@@ -192,10 +197,10 @@ require([
 
   async function findServiceArea(location, cutoff, url) {
       // get the walking distance
-      const networkDescription = await networkService.fetchServiceDescription(url);
-      const walkTravelMode = networkDescription.supportedTravelModes.find(
-          (travelMode) => travelMode.name === "Walking Time"
-      );
+      // const networkDescription = await networkService.fetchServiceDescription(url);
+      // const walkTravelMode = networkDescription.supportedTravelModes.find(
+      //     (travelMode) => travelMode.name === "Walking Time"
+      // );
 
       // set all of the input parameters for the service
       const taskParameters = new ServiceAreaParams({
@@ -204,8 +209,7 @@ require([
           }),
           defaultBreaks: cutoff,
           trimOuterPolygon: true,
-          outSpatialReference: mapview.spatialReference,
-          travelMode: walkTravelMode
+          outSpatialReference: mapview.spatialReference
       });
 
       const { serviceAreaPolygons } = await serviceArea.solve(url, taskParameters);
