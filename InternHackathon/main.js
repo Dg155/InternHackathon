@@ -4,6 +4,7 @@ const openModalBtn = document.querySelector(".btn-open");
 const closeModalBtn = document.querySelector(".btn");
 const scoreDisplays = document.querySelectorAll(".score");
 const companyFoundDisplay = document.querySelector(".companiesFound");
+const companyName = document.querySelectorAll('.esri-widget__heading');
 
 const tabContent = document.querySelector('.tab-content');
 const popupTab = document.querySelector('.popup-tab');
@@ -26,6 +27,10 @@ function hideOverlay() {
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
 }
+
+companyName.forEach((name) => {
+  console.log(name.innerHTML);
+});
 
 closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
@@ -55,12 +60,12 @@ require([
   });
   companyFoundDisplay.innerHTML = companiesFound;
 
-  const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab3107587dc0715", "1ce734a5ad484fd49a3ab38aff321d95", "f92e47aefcbf487e85c2e2a809d9a7ca"];
+  const portalIDs = ["65cb6f8751ba4c86be7c79f66d991339", "ff715f8f7a304d478db3170c96c041b6", "e8edc5231cec4a0b82bf3ba4ca9fc5c2", "8a58f1ed3d3f4b259f7817d4694a1133"];
 
   // step 1: setup the map
   const webmap = new WebMap({
       portalItem: {
-          id: "195b4bed88684f03a8613100ee29eb35"
+          id: portalIDs[Math.floor(Math.random()*portalIDs.length)]
       },
       popupEnabled: true
   });
@@ -75,7 +80,7 @@ require([
 
   webmap.when(() => {
       placesLayer = webmap.layers.find(layer => {
-          return layer.title === "Impactapedia";
+          return layer.title === " ";
       });
       const featureFilter = {
         geometry: mapview.extent,

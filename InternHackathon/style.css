@@ -294,8 +294,13 @@ h2 {
   font-size: 30px;
  }
 
- .esri-ui-top-left {
+.esri-widget__table, .esri-popup__content, .esri-popup__collapse-icon, .esri-ui-top-left {
   display: none;
+}
+
+h2.esri-widget__heading {
+  text-shadow: none;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 .score, .companiesFound {
