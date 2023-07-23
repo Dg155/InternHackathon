@@ -2,7 +2,14 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const openModalBtn = document.querySelector(".btn-open");
 const closeModalBtn = document.querySelector(".btn");
-const scoreDisplay = document.querySelector(".score");
+const scoreDisplays = document.querySelectorAll(".score");
+const companyFoundDisplay = document.querySelector(".companiesFound");
+
+const tabContent = document.querySelector('.tab-content');
+const popupTab = document.querySelector('.popup-tab');
+const tabIcon = document.querySelector('.tab-icon');
+
+tabContent.style.display = 'none';
 
 const closeModal = function () {
   setTimeout(hideOverlayAnimation, 700); 
@@ -19,8 +26,6 @@ function hideOverlay() {
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
 }
-
-
 
 closeModalBtn.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
@@ -42,9 +47,13 @@ require([
 ) {
   let placesLayer;
   let score = 0;
+  let companiesFound = 0;
   let objectIDs = [];
 
-  scoreDisplay.innerHTML = score;
+  scoreDisplays.forEach((scoreDisplay) => {
+    scoreDisplay.innerHTML = score;
+  });
+  companyFoundDisplay.innerHTML = companiesFound;
 
   const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab3107587dc0715", "1ce734a5ad484fd49a3ab38aff321d95", "f92e47aefcbf487e85c2e2a809d9a7ca"];
 
@@ -187,12 +196,18 @@ require([
               geometry: serviceAreaFeature.geometry
           };
           mapview.whenLayerView(placesLayer).then(placesLayerView => {
+            let scoreMultiplier = 1;
               placesLayerView.queryFeatures(query).then((response) => {
                   //console.log(response.features);
                   response.features.forEach((place) => {
-                    score += 100;
-                    scoreDisplay.innerHTML = score;
+                    score += 100 * scoreMultiplier;
+                    scoreDisplays.forEach((scoreDisplay) => {
+                      scoreDisplay.innerHTML = score;
+                    });
+                    companiesFound++;
+                    companyFoundDisplay.innerHTML = companiesFound;
                     objectIDs.push(place.attributes.OBJECTID);
+                    scoreMultiplier++;
                   });
                   // const attributes = response.features.map(f => f.attributes);
                   // attributes.forEach((place) => {
@@ -214,20 +229,17 @@ require([
 });
 
 function toggleTab() {
-    const tabContent = document.querySelector('.tab-content');
-    const popupTab = document.querySelector('.popup-tab');
-    const tabIcon = document.querySelector('.tab-icon');
 
     // Toggle the visibility of the tab content
     if (tabContent.style.display === 'none') { // click --> open popup tab
         tabContent.style.display = 'block';
         popupTab.style.left = '0';
         tabIcon.style.left = '370';
-        tabIcon.style.top = '110';
+        tabIcon.style.top = '30';
         
     } else { // click --> hide tab
         tabContent.style.display = 'none';
-        popupTab.style.left = '-25%';
+        popupTab.style.left = '-35%';
         tabIcon.style.left = '10';
     }
 }

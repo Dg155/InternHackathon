@@ -226,11 +226,14 @@ h2 {
 
 .popup-tab {
   position: absolute;
-  left: -25%;
+  left: -30%;
   top: 90;
   height: 480;
   width: 25%;
-  background-color: #a7a6a6;
+  background-image: linear-gradient(to right top, #1d2224, #282b2d, #333537, #3e3f40, #49494a, #49494a, #49494a, #49494a, #3e3f40, #333537, #282b2d, #1d2224);  padding: 10px;
+  border: #02b7d6 4px solid;
+  border-radius: 10px;
+  border-left: none;
   transition: left 0.3s;
   overflow-y: auto;
 }
@@ -239,6 +242,18 @@ h2 {
   display: none;
   padding: 20px;
   position: relative;
+}
+
+.tab-content p {
+  color: white;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 25px;
+}
+
+.scoreList {
+  display: flex;
+  flex-direction: row;
+  color: white;
 }
 
 .tab-icon {
@@ -253,15 +268,22 @@ h2 {
   color: #ffffff;
 }
 
-.close-icon {
+#close-icon {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 20px;
   cursor: pointer;
-  padding: 1px 7px;
-  background-color: #68696f;
+  padding: 10px 18px;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
   /* border-radius: 50%; */
+}
+
+.zindex2 {
+  z-index: 2;
 }
 
 .topcorner{
@@ -272,8 +294,13 @@ h2 {
   font-size: 30px;
  }
 
-.score {
+ .esri-ui-top-left {
+  display: none;
+}
+
+.score, .companiesFound {
   color: white;
+  padding-left: 5px;
   animation: fadeBounce 1s forwards;
   -webkit-animation: fadeBounce 1s forwards;
   z-index: 2;
@@ -335,6 +362,10 @@ button {
   background-image: linear-gradient(to left bottom, rgba(36, 36, 36, 0.7), rgba(52, 52, 52, 0.7), rgba(69, 69, 69, 0.7), rgba(87, 87, 87, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(105, 105, 105, 0.7), rgba(87, 87, 87, 0.7), rgba(69, 69, 69, 0.7), rgba(52, 52, 52, 0.7), rgba(36, 36, 36, 0.7));
   backdrop-filter: blur(3px);
   z-index: 3;
+}
+
+.topcorner p {
+  margin: 0;
 }
 
 .modal h2{
@@ -482,7 +513,7 @@ button {
   }
 }
 
-.tron-button:hover{
+.tron-button:hover, #close-icon:hover{
   box-shadow: 0px 0px 100px 5px #2E4774;
   background-color: #02b7d6;
   color: #1a1a1a;
