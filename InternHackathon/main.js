@@ -234,7 +234,7 @@ function toggleTab() {
     if (tabContent.style.display === 'none') { // click --> open popup tab
         tabContent.style.display = 'block';
         popupTab.style.left = '0';
-        tabIcon.style.left = '370';
+        // tabIcon.style.left = '370';
         tabIcon.style.top = '30';
         
     } else { // click --> hide tab

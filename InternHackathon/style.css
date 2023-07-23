@@ -260,9 +260,9 @@ h2 {
   display: block;
   position: absolute;
   left: 10px;
-  top: 110px;
+  top: 30px;
   transform: translateY(-50%);
-  font-size: 24px;
+  font-size: 32px;
   cursor: pointer;
   transition: left 0.3s;
   color: #ffffff;
