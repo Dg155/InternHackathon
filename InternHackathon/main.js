@@ -47,7 +47,7 @@ const portalIDs = ["6bbb397edb8b4f1bbe7dd829b226625d", "25dac44bd3604624bab31075
   // step 1: setup the map
   const webmap = new WebMap({
       portalItem: {
-          id: portalIDs[Math.floor(Math.random() * portalIDs.length)]
+          id: "195b4bed88684f03a8613100ee29eb35"
       },
       popupEnabled: true
   });
