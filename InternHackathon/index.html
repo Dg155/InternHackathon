@@ -20,13 +20,22 @@
 <body>
   <section class="modal">
     <h2 id="title">IMPACTAPEDIA</h2>
-    <button class="btn tron-button">
-      <span class="tron-button__left-line"></span>
-      <span class="tron-button__top-line"></span>
-      <span class="tron-button__right-line"></span>
-      <span class="tron-button__bottom-line"></span> 
-      Play
-    </button>
+    <div class="menuButtons">
+      <button id="startExploreButton" class="btn tron-button stableWidth .btn-start-explore">
+        <span class="tron-button__left-line"></span>
+        <span class="tron-button__top-line"></span>
+        <span class="tron-button__right-line"></span>
+        <span class="tron-button__bottom-line"></span> 
+        Explore
+      </button>
+      <button id="startPlayButton" class="btn tron-button stableWidth">
+        <span class="tron-button__left-line"></span>
+        <span class="tron-button__top-line"></span>
+        <span class="tron-button__right-line"></span>
+        <span class="tron-button__bottom-line"></span> 
+        Play
+      </button>
+    </div>
   </section>
   <div class="overlay">
     <section class="grid-container">
@@ -44,7 +53,7 @@
     </section>
   </div>
   <div class="topcorner scoreList">
-    <p class="zindex2">Score:</p>
+    <p id="scoreOne" class="zindex2">Score:</p>
     <p class="score"></p>
   </div>
   <div id="Banner">
@@ -71,13 +80,13 @@
     </div>
     <p>This is the popup content.</p>
     <div class="scoreList">
-      <p>Score:</p>
+      <p id="scoreTwo">Score:</p>
       <p class="score"></p>
     </div>
     <div class="scoreList">
-      <p>Companies Found:</p>
+      <p id="CompaniesFound">Companies Found:</p>
       <p class="companiesFound">4</p>
-      <p>/1800</p>
+      <p id="TotalCompanies">/1688</p>
     </div>
   </div>
 </div>

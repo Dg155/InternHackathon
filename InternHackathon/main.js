@@ -2,6 +2,8 @@ const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const openModalBtn = document.querySelector(".btn-open");
 const closeModalBtn = document.querySelector(".btn");
+const startGameBtn = document.getElementById("startPlayButton");
+const startExploreBtn = document.getElementById("startExploreButton");
 const scoreDisplays = document.querySelectorAll(".score");
 const companyFoundDisplay = document.querySelector(".companiesFound");
 const companyName = document.querySelectorAll('.esri-widget__heading');
@@ -10,7 +12,30 @@ const tabContent = document.querySelector('.tab-content');
 const popupTab = document.querySelector('.popup-tab');
 const tabIcon = document.querySelector('.tab-icon');
 
+// Explore Mode
+const scoreOne = document.getElementById("scoreOne");
+const scoreTwo = document.getElementById("scoreTwo");
+const CompaniesFoundText = document.getElementById("CompaniesFound");
+const totalCompanies = document.getElementById("TotalCompanies");
+
 tabContent.style.display = 'none';
+
+let gameMode = false;
+
+let mapview;
+let placesLayer;
+
+const startGame = function () {
+  gameMode = true;
+  updateGameType();
+  closeModal();
+};
+
+const startExplore = function () {
+  gameMode = false;
+  updateGameType();
+  closeModal();
+};
 
 const closeModal = function () {
   setTimeout(hideOverlayAnimation, 700); 
@@ -32,8 +57,49 @@ companyName.forEach((name) => {
   console.log(name.innerHTML);
 });
 
-closeModalBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
+const updateGameType = function () {
+  if (gameMode) {
+    scoreDisplays.forEach((scoreDisplay) => {
+      scoreDisplay.classList.remove("hidden");
+    });
+    companyFoundDisplay.classList.remove("hidden");
+    scoreOne.classList.remove("hidden");
+    scoreTwo.classList.remove("hidden");
+    CompaniesFoundText.classList.remove("hidden");
+    totalCompanies.classList.remove("hidden");
+    const featureFilter = {
+      geometry: mapview.extent,
+      spatialRelationship: "intersects",
+      };
+      placesLayer.featureEffect = {
+        filter: featureFilter,
+        includedEffect: "opacity(0%)",
+        excludedEffect: "opacity(0%)"
+      };
+  }
+  else {
+    scoreDisplays.forEach((scoreDisplay) => {
+      scoreDisplay.classList.add("hidden");
+    });
+    companyFoundDisplay.classList.add("hidden");
+    scoreOne.classList.add("hidden");
+    scoreTwo.classList.add("hidden");
+    CompaniesFoundText.classList.add("hidden");
+    totalCompanies.classList.add("hidden");
+    const featureFilter = {
+      geometry: mapview.extent,
+      spatialRelationship: "intersects",
+      };
+      placesLayer.featureEffect = {
+        filter: featureFilter,
+        includedEffect: "opacity(100%)",
+        excludedEffect: "opacity(100%)"
+      }; 
+  }
+};
+
+startGameBtn.addEventListener("click", startGame);
+startExploreBtn.addEventListener("click", startExplore);
 
 require([
   "esri/WebMap",
@@ -50,7 +116,6 @@ require([
 ], function (
   WebMap, MapView, Legend, esriConfig, networkService, serviceArea, ServiceAreaParams, FeatureSet, Graphic, GraphicsLayer, geometryService
 ) {
-  let placesLayer;
   let score = 0;
   let companiesFound = 0;
   let objectIDs = [];
@@ -69,7 +134,7 @@ require([
       },
       popupEnabled: true
   });
-  const mapview = new MapView({
+  mapview = new MapView({
       container: "viewDiv",
       map: webmap
   });
@@ -82,61 +147,36 @@ require([
       placesLayer = webmap.layers.find(layer => {
           return layer.title === " ";
       });
-      const featureFilter = {
+      if (gameMode) {
+        const featureFilter = {
         geometry: mapview.extent,
         spatialRelationship: "intersects",
-    };
-      placesLayer.featureEffect = {
+        };
+        placesLayer.featureEffect = {
           filter: featureFilter,
           includedEffect: "opacity(0%)",
           excludedEffect: "grayscale(90%) opacity(80%)"
-      }; 
+        }; 
+      }
     });
-
-
-
-      // mapview.whenLayerView(placesLayer).then(layerView => {
-      //   layerView.watch("updating", (val) => {
-      //       if (!val) {
-      //         let query = placesLayer.createQuery();
-      //         query.geometry = { //Create a point
-      //             type: "point",
-      //             longitude: -118.80657463861,
-      //             latitude: 34.0005930608889
-      //         };
-      //         query.distance = 2;
-      //         query.units - "miles";
-      //         query.spatialRelationship = "contains";
-      //         query.outFields = ["*"];
-      //         query.returnGeometry = true;
-      //           layerView.queryFeatures(query).then((results) => {
-      //               console.log(JSON.stringify(results));
-      //             })
-      //           }
-      //         })
-      //       });
-
-
-  
-
-  // step 2: service area
 
   esriConfig.apiKey = "AAPK2d7fbc74c0234e7d87853f9a7536a266jjADxHV7SDwJC-LQWIVQm_AD68b8QGuoVqWLgcrzANkVM0FOidizY4nERgOVi5fr";
   const serviceAreaUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/ServiceAreas/NAServer/ServiceArea_World";
 
   // when clicking anywhere on the map, generate the service area
   mapview.on("click", (event) => {
-      reset();
-      const locationGraphic = new Graphic({
-          geometry: event.mapPoint,
-          symbol: {
-              type: "web-style",
-              name: "esri-pin-1",
-              styleName: "Esri2DPointSymbolsStyle"
-          }
-      });
-      mapview.graphics.add(locationGraphic, 0);
-      findServiceArea(locationGraphic, [500], serviceAreaUrl);
+    if (!gameMode) {return;}
+    reset();
+    const locationGraphic = new Graphic({
+        geometry: event.mapPoint,
+        symbol: {
+            type: "web-style",
+            name: "esri-pin-1",
+            styleName: "Esri2DPointSymbolsStyle"
+        }
+    });
+    mapview.graphics.add(locationGraphic, 0);
+    findServiceArea(locationGraphic, [500], serviceAreaUrl);
   });
 
   // when clicking on the side bar, reset

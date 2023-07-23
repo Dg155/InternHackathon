@@ -298,6 +298,12 @@ h2 {
   display: none;
 }
 
+.menuButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 h2.esri-widget__heading {
   text-shadow: none;
   font-family: 'Noto Sans', sans-serif;
@@ -349,7 +355,7 @@ button {
   border-radius: 5px;
   text-align: center;
   font-size: 30px;
-  width: fit-content;
+  width: 230px;
   align-self: center;
   transform: translateY(100px); 
   font-family: 'Noto Sans', sans-serif;
