@@ -1,3 +1,4 @@
+console.log("Does this even fun");
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const openModalBtn = document.querySelector(".btn-open");
