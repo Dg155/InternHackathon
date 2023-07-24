@@ -8,6 +8,7 @@ const scoreDisplays = document.querySelectorAll(".score");
 const companyFoundDisplay = document.querySelector(".companiesFound");
 const companyName = document.querySelectorAll('.esri-widget__heading');
 const popUpContent = document.getElementById('popUpContent');
+const tabClose = document.getElementById('close-icon');
 
 const tabContent = document.querySelector('.tab-content');
 const popupTab = document.querySelector('.popup-tab');
@@ -115,6 +116,8 @@ const updateGameType = function () {
 
 startGameBtn.addEventListener("click", startGame);
 startExploreBtn.addEventListener("click", startExplore);
+tabIcon.addEventListener("click", toggleTab);
+tabClose.addEventListener("click", toggleTab);
 
 require([
   "esri/WebMap",
