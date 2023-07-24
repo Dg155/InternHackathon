@@ -54,6 +54,22 @@ function hideOverlay() {
   overlay.classList.add("hidden");
 }
 
+function toggleTab() {
+
+  // Toggle the visibility of the tab content
+  if (tabContent.style.display === 'none') { // click --> open popup tab
+      tabContent.style.display = 'block';
+      popupTab.style.left = '0';
+      // tabIcon.style.left = '370';
+      tabIcon.style.top = '30';
+      
+  } else { // click --> hide tab
+      tabContent.style.display = 'none';
+      popupTab.style.left = '-35%';
+      tabIcon.style.left = '10';
+  }
+}
+
 const updateGameType = function () {
   if (gameMode) {
     scoreDisplays.forEach((scoreDisplay) => {
@@ -289,19 +305,3 @@ require([
       document.getElementById("queryResults").innerHTML = "";
   }
 });
-
-function toggleTab() {
-
-    // Toggle the visibility of the tab content
-    if (tabContent.style.display === 'none') { // click --> open popup tab
-        tabContent.style.display = 'block';
-        popupTab.style.left = '0';
-        // tabIcon.style.left = '370';
-        tabIcon.style.top = '30';
-        
-    } else { // click --> hide tab
-        tabContent.style.display = 'none';
-        popupTab.style.left = '-35%';
-        tabIcon.style.left = '10';
-    }
-}
