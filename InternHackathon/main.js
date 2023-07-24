@@ -123,6 +123,8 @@ require([
   let companiesFound = 0;
   let objectIDs = [];
 
+  console.log("hello");
+
   scoreDisplays.forEach((scoreDisplay) => {
     scoreDisplay.innerHTML = score;
   });
