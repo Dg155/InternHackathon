@@ -104,6 +104,8 @@ const updateGameType = function () {
 startGameBtn.addEventListener("click", startGame);
 startExploreBtn.addEventListener("click", startExplore);
 
+console.log("checking now");
+
 require([
   "esri/WebMap",
   "esri/views/MapView",
