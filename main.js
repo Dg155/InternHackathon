@@ -1,4 +1,3 @@
-console.log("Does this even fun");
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const openModalBtn = document.querySelector(".btn-open");
@@ -55,10 +54,6 @@ function hideOverlay() {
   overlay.classList.add("hidden");
 }
 
-companyName.forEach((name) => {
-  console.log(name.innerHTML);
-});
-
 const updateGameType = function () {
   if (gameMode) {
     scoreDisplays.forEach((scoreDisplay) => {
@@ -105,8 +100,6 @@ const updateGameType = function () {
 startGameBtn.addEventListener("click", startGame);
 startExploreBtn.addEventListener("click", startExplore);
 
-console.log("checking now");
-
 require([
   "esri/WebMap",
   "esri/views/MapView",
@@ -125,8 +118,6 @@ require([
   let score = 0;
   let companiesFound = 0;
   let objectIDs = [];
-
-  console.log("hello");
 
   scoreDisplays.forEach((scoreDisplay) => {
     scoreDisplay.innerHTML = score;
@@ -277,7 +268,6 @@ require([
           mapview.whenLayerView(placesLayer).then(placesLayerView => {
             let scoreMultiplier = 1;
               placesLayerView.queryFeatures(query).then((response) => {
-                  //console.log(response.features);
                   response.features.forEach((place) => {
                     score += 100 * scoreMultiplier;
                     scoreDisplays.forEach((scoreDisplay) => {
@@ -288,13 +278,6 @@ require([
                     objectIDs.push(place.attributes.OBJECTID);
                     scoreMultiplier++;
                   });
-                  // const attributes = response.features.map(f => f.attributes);
-                  // attributes.forEach((place) => {
-                  //     const infoDiv = document.createElement("calcite-list-item");
-                  //     infoDiv.label = place.NAME;
-                  //     infoDiv.description = place.ADDR + ", " + place.CITYNM + " - " + place.TYPE;
-                  //     document.getElementById("queryResults").appendChild(infoDiv);
-                  // });
               })
           })
       })
